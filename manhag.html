@@ -1,0 +1,409 @@
+<title>Loka's 30-Day Curriculum</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alexandria:wght@500;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* Layout: one narrow column. Summary first (progress like an ad account's delivery), then weeks as stacked lesson rows. */
+:root{
+  --bg:#F3F5F4; --surface:#FFFFFF; --ink:#15201C; --muted:#5A6863; --line:#D9E0DD;
+  --accent:#0D6B59; --accent-soft:#DDEFEA; --on-accent:#FFFFFF;
+  --t-biz:#A76A12; --t-ads:#2C59C6; --t-cre:#B0346A; --t-brand:#6A4BBE;
+  --ok:#1E7A45; --learning:#B07A10;
+  --f-display:"Alexandria","IBM Plex Sans",system-ui,sans-serif;
+  --f-body:"IBM Plex Sans",system-ui,"Segoe UI",sans-serif;
+  --f-num:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0E1412; --surface:#161F1C; --ink:#E6EDEA; --muted:#94A39E; --line:#28332F;
+  --accent:#45C1A5; --accent-soft:#17362F; --on-accent:#08201A;
+  --t-biz:#E3A84C; --t-ads:#86A4F2; --t-cre:#EC85AF; --t-brand:#AE98F2;
+  --ok:#5CC98A; --learning:#E3B04F; color-scheme:dark;
+}}
+:root[data-theme="dark"]{
+  --bg:#0E1412; --surface:#161F1C; --ink:#E6EDEA; --muted:#94A39E; --line:#28332F;
+  --accent:#45C1A5; --accent-soft:#17362F; --on-accent:#08201A;
+  --t-biz:#E3A84C; --t-ads:#86A4F2; --t-cre:#EC85AF; --t-brand:#AE98F2;
+  --ok:#5CC98A; --learning:#E3B04F; color-scheme:dark;
+}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.65}
+.wrap{max-width:720px;margin:0 auto;padding-inline:16px;padding-block:28px 64px;display:flex;flex-direction:column;gap:28px}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0;line-height:1.3}
+h1{font-size:1.9rem;font-weight:700}
+h2{font-size:1.25rem;font-weight:700}
+h3{font-size:1.02rem;font-weight:500}
+p{margin:0}
+a{color:var(--accent);text-underline-offset:3px}
+a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,summary:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
+.num{font-family:var(--f-num);font-variant-numeric:tabular-nums}
+.muted{color:var(--muted)}
+.eyebrow{font-size:.75rem;color:var(--muted);letter-spacing:.06em;text-transform:uppercase}
+
+header{display:flex;flex-direction:column;gap:6px}
+.sync{align-self:flex-start;font-size:.78rem;padding:2px 10px;border-radius:999px;border:1px solid var(--line);color:var(--muted)}
+.sync.on{color:var(--ok);border-color:currentColor}
+
+.summary{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:20px;display:flex;flex-direction:column;gap:16px}
+.big{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.big .pct{font-family:var(--f-num);font-size:2.6rem;line-height:1;color:var(--accent)}
+.bar{height:10px;background:var(--accent-soft);border-radius:999px;overflow:hidden}
+.bar > i{display:block;height:100%;background:var(--accent);border-radius:999px;width:0;transition:width .35s ease}
+.weeks{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:12px}
+.wk{display:flex;flex-direction:column;gap:4px;min-width:0}
+.wk .bar{height:6px}
+.wk span{font-size:.8rem;color:var(--muted)}
+.next{border-top:1px solid var(--line);padding-top:14px;display:flex;flex-direction:column;gap:2px}
+.next a{font-weight:600}
+
+.rules{display:flex;flex-direction:column;gap:8px}
+.rules ul{margin:0;padding-inline-start:20px;display:flex;flex-direction:column;gap:4px}
+
+.week{display:flex;flex-direction:column;gap:12px}
+.week-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap;border-bottom:2px solid var(--wc,var(--accent));padding-bottom:6px}
+.week-head .num{font-size:.85rem;color:var(--muted)}
+
+.lesson{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:12px;scroll-margin-top:16px}
+.lesson.done{border-color:color-mix(in srgb,var(--ok) 45%,var(--line))}
+.l-top{display:flex;gap:10px;align-items:flex-start;justify-content:space-between}
+.l-title{display:flex;flex-direction:column;gap:4px;min-width:0}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{font-size:.72rem;padding:1px 8px;border-radius:999px;border:1px solid currentColor;white-space:nowrap}
+.trk-biz{color:var(--t-biz)} .trk-ads{color:var(--t-ads)} .trk-cre{color:var(--t-cre)} .trk-brand{color:var(--t-brand)}
+.status{font-size:.72rem;padding:2px 9px;border-radius:999px;white-space:nowrap;background:var(--bg);color:var(--muted);border:1px solid var(--line)}
+.status.learning{color:var(--learning);border-color:currentColor}
+.status.active{color:var(--ok);border-color:currentColor}
+.lnum{font-family:var(--f-num);color:var(--muted);font-size:.8rem;letter-spacing:.04em}
+
+.step{display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:start}
+.step input{width:22px;height:22px;margin:2px 0 0;accent-color:var(--accent);cursor:pointer}
+.step label{display:flex;flex-direction:column;gap:2px;cursor:pointer;min-width:0}
+.step .kind{font-size:.72rem;font-weight:600;color:var(--muted);letter-spacing:.06em;text-transform:uppercase}
+.step.checked .txt{color:var(--muted);text-decoration:line-through;text-decoration-color:color-mix(in srgb,var(--muted) 60%,transparent)}
+.links{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:.88rem;padding-inline-start:32px}
+details.note{padding-inline-start:32px}
+details.note summary{cursor:pointer;font-size:.85rem;color:var(--muted)}
+details.note textarea{margin-top:8px;width:100%;box-sizing:border-box;min-height:70px;resize:vertical;font:inherit;font-size:.9rem;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:8px 10px}
+
+.end{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:20px;display:flex;flex-direction:column;gap:10px}
+.end ol{margin:0;padding-inline-start:22px;display:flex;flex-direction:column;gap:4px}
+.reset{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+button{font:inherit;font-size:.85rem;border-radius:8px;padding:6px 14px;cursor:pointer;border:1px solid var(--line);background:var(--bg);color:var(--ink)}
+button.danger{border-color:var(--t-cre);color:var(--t-cre)}
+@media (prefers-reduced-motion: reduce){.bar > i{transition:none}}
+</style>
+
+<div class="wrap" lang="en">
+  <header>
+    <span class="eyebrow">Media Buying · Business · Creative · Brand</span>
+    <h1>Loka's 30-Day Curriculum</h1>
+    <p class="muted">Every lesson has two steps: <b>Learn</b> it, then <b>Apply</b> it to a real account. Tick each step when you finish it and watch your progress grow.</p>
+    <span class="sync" id="sync">Loading…</span>
+  </header>
+
+  <section class="summary" aria-label="Progress">
+    <div class="big">
+      <span class="pct" id="pct">0%</span>
+      <span class="muted"><span class="num" id="doneCount">0</span> of <span class="num" id="totalCount">42</span> steps</span>
+      <span class="muted" id="dayInfo"></span>
+    </div>
+    <div class="bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" id="mainBar"><i id="mainFill"></i></div>
+    <div class="weeks" id="weekBars"></div>
+    <div class="next" id="next"></div>
+  </section>
+
+  <section class="rules">
+    <h2>How to use it</h2>
+    <ul>
+      <li>One hour a day at most. You can learn today and apply tomorrow.</li>
+      <li>No fixed day for each lesson. Go in order; your next lesson always shows at the top.</li>
+      <li>If you miss a day, just continue from where you stopped. Don't do two lessons at the cost of your sleep.</li>
+      <li>After each lesson, write one line in "What did I learn?". Writing it in English is practice too.</li>
+    </ul>
+  </section>
+
+  <div id="weeks"></div>
+
+  <section class="end">
+    <h2>End of the month: review with numbers</h2>
+    <ol>
+      <li>For how many accounts do you now know the break-even ROAS?</li>
+      <li>How many tests or offers did you suggest that actually went live?</li>
+      <li>How many videos did you shoot, or briefs did you write, yourself?</li>
+      <li>Do clients or Mohaned now ask you about the business, not only the ads?</li>
+    </ol>
+    <div class="reset">
+      <button type="button" class="danger" id="resetBtn">Restart the curriculum</button>
+      <span id="resetConfirm" hidden>
+        <span class="muted">This deletes all ticks and notes.</span>
+        <button type="button" class="danger" id="resetYes">Yes, delete</button>
+        <button type="button" id="resetNo">Cancel</button>
+      </span>
+    </div>
+  </section>
+</div>
+
+<script>
+const YT = q => "https://www.youtube.com/results?search_query=" + encodeURIComponent(q);
+const L = {
+  roas:{label:"Beyond ROAS (your guide)",url:"https://claude.ai/code/artifact/6b81c20b-0e3c-4737-8a8e-57c05d060038"},
+  acc:{label:"Accounting Stuff",url:"https://www.youtube.com/@AccountingStuff"},
+  dtc:{label:"DTC Playbook: Unit Economics",url:"https://thedtcplaybook.com/finance-unit-economics/"},
+  ctc:{label:"Common Thread Collective",url:"https://www.youtube.com/c/commonthreadcollective"},
+  offers:{label:"Acquisition.com: Offers (free)",url:"https://www.acquisition.com/training/offers"},
+  leads:{label:"Acquisition.com: Leads (free)",url:"https://www.acquisition.com/training/leads"},
+  blueprint:{label:"Meta Blueprint",url:"https://www.facebook.com/business/learn"},
+  ttacad:{label:"TikTok Academy",url:"https://ads.tiktok.com/business/en/academy"},
+  ttcc:{label:"TikTok Creative Center",url:"https://ads.tiktok.com/business/creativecenter"},
+  andromeda:{label:"Andromeda Playbook 2026",url:"https://segwise.ai/blog/meta-andromeda-update-creative-strategy-2026"},
+  mCount:{label:"Motion: How many creatives?",url:"https://motionapp.com/library/talk/meta-ads-in-2026-how-many-creatives-do-you-actually-need-to-launch/"},
+  mBench:{label:"Motion: 2026 Benchmarks",url:"https://motionapp.com/library/talk/we-analyzed-5000-meta-ads-the-2026-creative-benchmarks-report/"},
+  mHooks:{label:"Motion: Hooks & formats",url:"https://motionapp.com/library/talk/we-analyzed-500k-in-meta-ads-to-find-hooks-formats-that-always-win/"},
+  mDara:{label:"Motion: Dara Denney",url:"https://motionapp.com/library/talk/dara-denney-reveals-the-biggest-creative-analysis-mistake-in-2026-most/"},
+  mProd:{label:"Motion: Production process",url:"https://motionapp.com/library/talk/how-i-make-200-winning-meta-ads-per-week-full-production-process/"}
+};
+const WEEKS = [
+  {n:1, name:"Business Money", color:"var(--t-biz)"},
+  {n:2, name:"Ads Mastery", color:"var(--t-ads)"},
+  {n:3, name:"Creative & Shooting", color:"var(--t-cre)"},
+  {n:4, name:"Personal Brand & Clients", color:"var(--t-brand)"},
+  {n:5, name:"Final", color:"var(--accent)"}
+];
+const TRACK = {biz:"Business & Finance", ads:"Ads Mastery", cre:"Creative", brand:"Brand & Clients"};
+const LESSONS = [
+  {id:"L1",w:1,t:"biz",title:"The brand's P&L",
+   learn:"Understand the chain: Revenue → COGS → Gross Margin → Contribution Margin. Watch the Income Statement video and read the first two parts of Beyond ROAS.",links:[L.acc,L.roas],
+   apply:"Ask one e-commerce client for: product cost, shipping, return rate, and payment fees. Calculate their contribution margin."},
+  {id:"L2",w:1,t:"biz",title:"Break-even ROAS and Target CPA",
+   learn:"Review the break-even section in Beyond ROAS: 1 ÷ Contribution Margin %, and how to get a target CPA from it.",links:[L.roas],
+   apply:"Calculate break-even ROAS for 3 accounts. Next to each one, write the real ROAS from the last 30 days. Which ones are actually profitable?"},
+  {id:"L3",w:1,t:"biz",title:"MER, not just ROAS",
+   learn:"Understand MER (total revenue ÷ total ad spend) and why CTC use it instead of platform ROAS.",links:[L.dtc,L.ctc],
+   apply:"For one account: total store revenue ÷ total spend on all platforms, last 30 days. Compare it with the ROAS in Ads Manager. What does the gap tell you?"},
+  {id:"L4",w:1,t:"biz",title:"The offer beats the ad",
+   learn:"Watch the first 2–3 videos of the free Offers course: the value equation and how to make an offer hard to refuse.",links:[L.offers],
+   apply:"Pick a client with a weak offer. Write a better one (bundle, guarantee, gift, real urgency) and prepare it as a proposal."},
+  {id:"L5",w:1,t:"biz",title:"LTV and repeat customers",
+   learn:"Read the LTV and CAC part of the DTC Playbook.",links:[L.dtc],
+   apply:"Ask one client (F&B or a repeat-purchase product is best) for their AOV and how many customers buy again. Estimate LTV and the maximum CAC they can pay."},
+
+  {id:"L6",w:2,t:"ads",title:"Andromeda and real diversity",
+   learn:"Read the playbook and watch the talk on creative volume: why different concepts matter more than variations.",links:[L.andromeda,L.mCount],
+   apply:"In one live account, count how many truly different concepts are running (not the same video with a new hook). If it's fewer than 5, write 3 new concepts."},
+  {id:"L7",w:2,t:"ads",title:"Account structure",
+   learn:"The Advantage+ sales campaigns module in Meta Blueprint.",links:[L.blueprint],
+   apply:"Pick an account with too many scattered campaigns and ad sets. Draw a simpler structure and write why it's better."},
+  {id:"L8",w:2,t:"ads",title:"Testing with a system",
+   learn:"Motion's 2026 Creative Benchmarks: what normal numbers look like and when you can judge a test.",links:[L.mBench],
+   apply:"Write a one-week test plan for one account: the hypothesis, one variable only, the metric that decides, and the budget."},
+  {id:"L9",w:2,t:"ads",title:"TikTok Ads done right",
+   learn:"One TikTok Academy course on creative best practices or Ads Manager.",links:[L.ttacad],
+   apply:"Open Top Ads for a client's niche in Creative Center. Compare the top 3 with your best Meta creative: what's different in the first 3 seconds?",applyLinks:[L.ttcc]},
+  {id:"L10",w:2,t:"ads",title:"Diagnosis by numbers",
+   learn:"No video here. Write your own funnel tree: CPM → CTR → CPC → Add to cart → Checkout → Purchase → AOV. Next to each metric, note what affects it (creative, audience, offer, landing page).",links:[],
+   apply:"Pick your worst account right now. Write one sentence: where exactly is the problem, in numbers, and what's the first thing you'll change?"},
+
+  {id:"L11",w:3,t:"cre",title:"Hooks",
+   learn:"Motion's talk on the hooks and formats that keep winning.",links:[L.mHooks],
+   apply:"Write 10 hooks for one client's product: 3 pain, 3 curiosity, 2 social proof, 2 offer."},
+  {id:"L12",w:3,t:"cre",title:"Creative analysis",
+   learn:"Dara Denney's talk on the biggest mistake in creative analysis.",links:[L.mDara],
+   apply:"For the top 5 ads in one account, list: hook rate (3-sec views ÷ impressions), hold rate, CTR, CPA. What do the winners have in common?"},
+  {id:"L13",w:3,t:"cre",title:"Phone shooting: light and framing",
+   learn:"Pick one short video about lighting and framing with a phone.",links:[{label:"YouTube: smartphone lighting",url:YT("smartphone video lighting tips beginners")},{label:"YouTube: phone framing",url:YT("smartphone video framing composition tips")}],
+   apply:"Shoot one product in 3 shots: window light, top-down angle, close-up. Which one is best, and why?"},
+  {id:"L14",w:3,t:"cre",title:"Audio and B-roll",
+   learn:"One video on clean phone audio and one on product B-roll ideas.",links:[{label:"YouTube: phone audio",url:YT("how to get good audio phone video")},{label:"YouTube: product B-roll",url:YT("product b-roll ideas phone")}],
+   apply:"Shoot a 30-second talking-head with clean audio plus 5 B-roll shots, and make a quick edit."},
+  {id:"L15",w:3,t:"cre",title:"The creative brief",
+   learn:"Motion's production process talk: how they turn one idea into many ads.",links:[L.mProd],
+   apply:"Write a full brief for one client: the angle, the hook, the key points, the objection to answer, the CTA, and a shot list."},
+
+  {id:"L16",w:4,t:"brand",title:"Your positioning",
+   learn:"One video on personal brand positioning. Connect it to the personal brand plan you're building in the other chat.",links:[{label:"YouTube: brand positioning",url:YT("personal brand positioning for marketers")}],
+   apply:"Write one sentence: I help [who] do [what] by [how]. Try 3 versions and choose one."},
+  {id:"L17",w:4,t:"brand",title:"A case study from your work",
+   learn:"One video on how to structure a marketing case study.",links:[{label:"YouTube: marketing case study",url:YT("how to write a marketing case study")}],
+   apply:"Write a case study of your best result: the problem → what you did → the numbers before and after. Remove the client's name if they don't agree."},
+  {id:"L18",w:4,t:"brand",title:"A report that talks business",
+   learn:"Review the client-conversation checklist in Beyond ROAS.",links:[L.roas],
+   apply:"Build a monthly report template: business numbers first (sales, contribution, MER), then ad metrics, then the plan."},
+  {id:"L19",w:4,t:"brand",title:"When results are bad",
+   learn:"A video on Chris Voss's tactical empathy: how to calm a hard conversation without losing the client.",links:[{label:"YouTube: Chris Voss",url:YT("Chris Voss tactical empathy")}],
+   apply:"Write a message to a client whose results dropped: admit the problem, explain the cause with numbers, share the plan, and say when you'll review again."},
+  {id:"L20",w:4,t:"brand",title:"Selling an extra service",
+   learn:"The first part of the free Leads course.",links:[L.leads],
+   apply:"Pick a current client who needs a service they don't have (shooting, TikTok, content). Write a short pitch, with numbers, on why it will help them."},
+
+  {id:"L21",w:5,t:"biz",title:"A full account audit",
+   learn:"Review your notes from all 20 lessons.",links:[],
+   apply:"Pick one client and write a one-page audit: business numbers, ads diagnosis, creative plan, and an offer suggestion. If you can, present it to the client or to Mohaned."}
+];
+
+const STEPS = LESSONS.flatMap(l => [l.id+"-learn", l.id+"-apply"]);
+let state = {done:{}, notes:{}, startedAt:null};
+let dbRef = null, mode = "local", writing = false, dirty = false, noteTimers = {};
+const LS_KEY = "loka-manhag-v1";
+const $ = id => document.getElementById(id);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const SYNCED = "Saved to your account · shows on phone and laptop";
+const LOCAL = "Saved on this device only";
+
+function build(){
+  const host = $("weeks");
+  host.innerHTML = WEEKS.map(w => {
+    const ls = LESSONS.filter(l => l.w === w.n);
+    return `<section class="week" style="--wc:${w.color}">
+      <div class="week-head"><h2>${w.n<5?`Week ${w.n}: `:""}${esc(w.name)}</h2><span class="num" id="wk-count-${w.n}"></span></div>
+      ${ls.map(lessonHTML).join("")}
+    </section>`;
+  }).join("");
+  $("weekBars").innerHTML = WEEKS.map(w => `<div class="wk"><span>${w.n<5?"Week "+w.n:"Final"}</span><div class="bar"><i id="wk-fill-${w.n}" style="background:${w.color}"></i></div></div>`).join("");
+  $("totalCount").textContent = STEPS.length;
+  host.addEventListener("change", e => {
+    const t = e.target;
+    if (t.matches("input[type=checkbox]")) {
+      state.done[t.dataset.step] = t.checked;
+      if (!state.startedAt && t.checked) state.startedAt = new Date().toISOString().slice(0,10);
+      render(); save();
+    }
+  });
+  host.addEventListener("input", e => {
+    const t = e.target;
+    if (t.matches("textarea")) {
+      const id = t.dataset.lesson;
+      state.notes[id] = t.value;
+      clearTimeout(noteTimers[id]);
+      noteTimers[id] = setTimeout(save, 900);
+    }
+  });
+}
+function linksHTML(arr){
+  return arr && arr.length ? `<div class="links">${arr.map(x=>`<a href="${esc(x.url)}" target="_blank" rel="noopener">${esc(x.label)} ↗</a>`).join("")}</div>` : "";
+}
+function lessonHTML(l){
+  const n = l.id.slice(1);
+  return `<article class="lesson" id="${l.id}">
+    <div class="l-top">
+      <div class="l-title">
+        <span class="lnum">LESSON ${n}</span>
+        <h3>${esc(l.title)}</h3>
+        <div class="chips"><span class="chip trk-${l.t}">${TRACK[l.t]}</span></div>
+      </div>
+      <span class="status" id="st-${l.id}">Not started</span>
+    </div>
+    <div class="step" id="row-${l.id}-learn">
+      <input type="checkbox" id="cb-${l.id}-learn" data-step="${l.id}-learn">
+      <label for="cb-${l.id}-learn"><span class="kind">Learn</span><span class="txt">${esc(l.learn)}</span></label>
+    </div>
+    ${linksHTML(l.links)}
+    <div class="step" id="row-${l.id}-apply">
+      <input type="checkbox" id="cb-${l.id}-apply" data-step="${l.id}-apply">
+      <label for="cb-${l.id}-apply"><span class="kind">Apply</span><span class="txt">${esc(l.apply)}</span></label>
+    </div>
+    ${linksHTML(l.applyLinks)}
+    <details class="note"><summary>What did I learn?</summary>
+      <textarea id="note-${l.id}" data-lesson="${l.id}" placeholder="One line is enough"></textarea>
+    </details>
+  </article>`;
+}
+function render(){
+  const done = STEPS.filter(s => state.done[s]).length;
+  const pct = Math.round(done / STEPS.length * 100);
+  $("pct").textContent = pct + "%";
+  $("doneCount").textContent = done;
+  $("mainFill").style.width = pct + "%";
+  $("mainBar").setAttribute("aria-valuenow", pct);
+  WEEKS.forEach(w => {
+    const ss = LESSONS.filter(l => l.w === w.n).flatMap(l => [l.id+"-learn", l.id+"-apply"]);
+    const d = ss.filter(s => state.done[s]).length;
+    $("wk-fill-"+w.n).style.width = (d/ss.length*100) + "%";
+    $("wk-count-"+w.n).textContent = d + "/" + ss.length;
+  });
+  LESSONS.forEach(l => {
+    const a = !!state.done[l.id+"-learn"], b = !!state.done[l.id+"-apply"];
+    ["learn","apply"].forEach((k,i) => {
+      const v = i ? b : a;
+      const cb = $("cb-"+l.id+"-"+k); if (cb.checked !== v) cb.checked = v;
+      $("row-"+l.id+"-"+k).classList.toggle("checked", v);
+    });
+    const st = $("st-"+l.id);
+    st.className = "status" + (a && b ? " active" : (a || b ? " learning" : ""));
+    st.textContent = a && b ? "Active ✓" : (a || b ? "Learning" : "Not started");
+    $(l.id).classList.toggle("done", a && b);
+    const ta = $("note-"+l.id);
+    if (document.activeElement !== ta) {
+      const v = state.notes[l.id] || "";
+      if (ta.value !== v) ta.value = v;
+      if (v) ta.closest("details").open = true;
+    }
+  });
+  const nx = LESSONS.find(l => !state.done[l.id+"-learn"] || !state.done[l.id+"-apply"]);
+  $("next").innerHTML = nx
+    ? `<span class="eyebrow">Next lesson</span><a href="#${nx.id}">Lesson ${nx.id.slice(1)}: ${esc(nx.title)}</a><span class="muted" style="font-size:.88rem">${!state.done[nx.id+"-learn"] ? "Start with the Learn step" : "Only the Apply step is left"}</span>`
+    : `<span class="eyebrow">Curriculum complete</span><span>You finished all 42 steps. Go through the end-of-month review below.</span>`;
+  if (state.startedAt) {
+    const days = Math.floor((Date.now() - new Date(state.startedAt+"T00:00:00").getTime()) / 864e5) + 1;
+    $("dayInfo").innerHTML = days <= 30 ? `· Day <span class="num">${days}</span> of <span class="num">30</span>` : `· Started <span class="num">${days}</span> days ago`;
+  } else $("dayInfo").textContent = "· Not started yet";
+}
+function setSync(text, on){ const s = $("sync"); s.textContent = text; s.classList.toggle("on", !!on); }
+function loadLocal(){
+  try { const raw = localStorage.getItem(LS_KEY); if (raw) state = Object.assign({done:{},notes:{},startedAt:null}, JSON.parse(raw)); } catch(e){}
+}
+async function save(){
+  if (mode === "local") {
+    try { localStorage.setItem(LS_KEY, JSON.stringify(state)); } catch(e){}
+    return;
+  }
+  if (writing) { dirty = true; return; }
+  writing = true;
+  try {
+    await dbRef.set({done:state.done, notes:state.notes, startedAt:state.startedAt, updatedAt:new Date().toISOString()});
+    setSync(SYNCED, true);
+  } catch(e) {
+    if (e && e.code === "invalid_argument") setSync("You can view this page but not edit it", false);
+    else setSync("Couldn't save your last change. Try again.", false);
+  } finally {
+    writing = false;
+    if (dirty) { dirty = false; save(); }
+  }
+}
+function resetAll(){
+  state = {done:{}, notes:{}, startedAt:null};
+  document.querySelectorAll("details.note textarea").forEach(t => t.value = "");
+  render(); save();
+}
+
+build();
+loadLocal();
+render();
+setSync(LOCAL, false);
+
+$("resetBtn").addEventListener("click", () => { $("resetConfirm").hidden = false; $("resetBtn").hidden = true; });
+$("resetNo").addEventListener("click", () => { $("resetConfirm").hidden = true; $("resetBtn").hidden = false; });
+$("resetYes").addEventListener("click", () => { $("resetConfirm").hidden = true; $("resetBtn").hidden = false; resetAll(); });
+
+(async () => {
+  try {
+    if (!window.claude || !window.claude.use) return;
+    const db = await window.claude.use("db");
+    if (!db) return;
+    dbRef = db.doc("progress/loka");
+    mode = "db";
+    setSync("Syncing…", false);
+    dbRef.onSnapshot(snap => {
+      if (snap.exists) {
+        const d = snap.data() || {};
+        if (!snap.metadata.hasPendingWrites) {
+          state = {done:Object.assign({}, d.done||{}), notes:Object.assign({}, d.notes||{}), startedAt:d.startedAt||null};
+        }
+      } else {
+        // first visit on this account: carry over anything saved on this device
+        const hasLocal = Object.keys(state.done).length || Object.keys(state.notes).length;
+        if (hasLocal) save();
+      }
+      render();
+      setSync(SYNCED, true);
+    }, () => { mode = "local"; setSync(LOCAL, false); });
+  } catch(e) { mode = "local"; }
+})();
+</script>
