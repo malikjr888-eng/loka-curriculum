@@ -1,11 +1,12 @@
 /* Service worker: keeps a copy of the app on the phone so it opens without internet.
    When you change any app file, bump VERSION so phones download the new copy. */
-const VERSION = "loka-v1";
+const VERSION = "loka-v2";
 const FILES = [
   "./", "index.html", "styles.css", "data.js", "app.js", "manifest.webmanifest",
-  "fonts/alexandria.woff2", "fonts/ibm-plex-sans.woff2", "fonts/ibm-plex-mono-500.woff2",
+  "fonts/anton.woff2", "fonts/archivo.woff2", "fonts/ibm-plex-mono-500.woff2",
   "icons/icon-192.png", "icons/icon-512.png", "icons/icon-maskable-512.png",
-  "icons/apple-touch-icon.png", "icons/favicon-64.png"
+  "icons/apple-touch-icon.png", "icons/favicon-64.png", "icons/favicon-32.png",
+  "icons/logo-header.png"
 ];
 
 self.addEventListener("install", e => {

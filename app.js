@@ -115,7 +115,7 @@ function build(){
       <button type="button" class="add-here" data-add-week="${w.n}">+ Add a lesson to ${w.n<5 ? "Week " + w.n : "Final"}</button>
     </section>`;
   }).join("");
-  $("weekBars").innerHTML = WEEKS.map(w => `<div class="wk"><span>${WEEK_LABEL(w.n)}</span><div class="bar"><i id="wk-fill-${w.n}" style="background:${w.color}"></i></div></div>`).join("");
+  $("weekBars").innerHTML = WEEKS.map(w => `<div class="wk"><span>${WEEK_LABEL(w.n)}</span><div class="bar"><i id="wk-fill-${w.n}"></i></div></div>`).join("");
 }
 
 /* ---------- Updating numbers, ticks and statuses ---------- */

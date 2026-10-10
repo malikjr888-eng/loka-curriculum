@@ -34,7 +34,8 @@ Open it once while you're online. After that it works without internet.
 | `app.js` | Ticks, notes, progress, your own lessons, backup |
 | `sw.js` | Offline support |
 | `manifest.webmanifest`, `icons/` | App name and home-screen icon |
-| `fonts/` | Fonts stored in the app so they work offline |
+| `fonts/` | Anton, Archivo and IBM Plex Mono, stored in the app so they work offline |
+| `icons/logo-source.webp` | Your original logo; all icons are made from it |
 | `manhag.html` | The original single-page version (kept for reference) |
 
 **After you change any file:** open `sw.js` and change `VERSION` (for example `loka-v1` → `loka-v2`). If you skip this, phones keep showing the old version. Phones get the update the next time the app is opened online; close and reopen it once more to see it.
