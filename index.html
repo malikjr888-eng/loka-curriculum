@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Loka's 30-Day Curriculum</title>
+<meta name="description" content="Loka's 30-day learning curriculum: Business, Ads, Creative and Brand.">
+<meta name="theme-color" content="#F3F5F4" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0E1412" media="(prefers-color-scheme: dark)">
+<meta name="color-scheme" content="light dark">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Loka 30">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" href="icons/favicon-64.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="preload" href="fonts/ibm-plex-sans.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <span class="eyebrow">Media Buying · Business · Creative · Brand</span>
+    <h1>Loka's <span class="nowrap">30-Day</span> Curriculum</h1>
+    <p class="muted">Every lesson has two steps: <b>Learn</b> it, then <b>Apply</b> it to a real account. Tick each step when you finish it and watch your progress grow.</p>
+    <span class="sync on" id="sync">Saved on this phone</span>
+  </header>
+
+  <section class="summary" aria-label="Progress">
+    <div class="big">
+      <span class="pct" id="pct">0%</span>
+      <span class="muted"><span class="num" id="doneCount">0</span> of <span class="num" id="totalCount">42</span> steps</span>
+      <span class="muted" id="dayInfo"></span>
+    </div>
+    <div class="bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-label="Overall progress" id="mainBar"><i id="mainFill"></i></div>
+    <div class="weeks" id="weekBars"></div>
+    <div class="next" id="next"></div>
+  </section>
+
+  <section class="rules">
+    <h2>How to use it</h2>
+    <ul>
+      <li>One hour a day at most. You can learn today and apply tomorrow.</li>
+      <li>No fixed day for each lesson. Go in order; your next lesson always shows at the top.</li>
+      <li>If you miss a day, just continue from where you stopped. Don't do two lessons at the cost of your sleep.</li>
+      <li>After each lesson, write one line in "What did I learn?". Writing it in English is practice too.</li>
+    </ul>
+    <button type="button" class="primary" data-add-week="1">+ Add your own lesson</button>
+  </section>
+
+  <div id="weeks"></div>
+
+  <section class="end">
+    <h2>End of the month: review with numbers</h2>
+    <ol>
+      <li>For how many accounts do you now know the break-even ROAS?</li>
+      <li>How many tests or offers did you suggest that actually went live?</li>
+      <li>How many videos did you shoot, or briefs did you write, yourself?</li>
+      <li>Do clients or Mohaned now ask you about the business, not only the ads?</li>
+    </ol>
+    <div class="reset">
+      <button type="button" class="danger" id="resetBtn">Restart the curriculum</button>
+      <span id="resetConfirm" hidden>
+        <span class="muted">This deletes all ticks and notes. Your own lessons stay.</span>
+        <span class="btns">
+          <button type="button" class="danger" id="resetYes">Yes, delete</button>
+          <button type="button" id="resetNo">Cancel</button>
+        </span>
+      </span>
+    </div>
+  </section>
+
+  <section class="end backup">
+    <h2>Backup and move to a new phone</h2>
+    <p class="muted">Your progress lives only on this phone. <b>Export</b> saves everything (ticks, notes, your lessons) as one file. On a new phone, open the app and use <b>Import</b> with that file.</p>
+    <div class="btns">
+      <button type="button" class="primary" id="exportBtn">Export backup</button>
+      <button type="button" id="importBtn">Import backup</button>
+      <input type="file" id="importFile" accept="application/json,.json" hidden>
+    </div>
+    <p class="muted small" id="lastBackup"></p>
+  </section>
+</div>
+
+<dialog id="lessonDlg" aria-labelledby="dlgTitle">
+  <form id="lessonForm" method="dialog" novalidate>
+    <h2 id="dlgTitle">Add your own lesson</h2>
+    <label class="field"><span>Title</span>
+      <input name="title" required maxlength="120" autocomplete="off" placeholder="e.g. Google Analytics basics">
+    </label>
+    <div class="row2">
+      <label class="field"><span>Track</span>
+        <select name="t">
+          <option value="biz">Business &amp; Finance</option>
+          <option value="ads">Ads Mastery</option>
+          <option value="cre">Creative</option>
+          <option value="brand">Brand &amp; Clients</option>
+          <option value="other">Other</option>
+        </select>
+      </label>
+      <label class="field"><span>Week</span>
+        <select name="w">
+          <option value="1">Week 1</option>
+          <option value="2">Week 2</option>
+          <option value="3">Week 3</option>
+          <option value="4">Week 4</option>
+          <option value="5">Final</option>
+        </select>
+      </label>
+    </div>
+    <label class="field"><span>Learn: what will you study?</span>
+      <textarea name="learn" required rows="3" maxlength="2000"></textarea>
+    </label>
+    <label class="field"><span>Apply: what will you do on a real account?</span>
+      <textarea name="apply" required rows="3" maxlength="2000"></textarea>
+    </label>
+    <label class="field"><span>Link (optional)</span>
+      <input name="url" type="url" inputmode="url" autocomplete="off" autocapitalize="off" placeholder="https://…">
+    </label>
+    <p class="form-err" id="formErr" role="alert" hidden></p>
+    <div class="btns end-btns">
+      <button type="button" id="dlgCancel">Cancel</button>
+      <button type="submit" class="primary" id="dlgSave">Save lesson</button>
+    </div>
+  </form>
+</dialog>
+
+<dialog id="confirmDlg" aria-labelledby="cfTitle">
+  <form method="dialog">
+    <h2 id="cfTitle"></h2>
+    <p class="muted" id="cfText"></p>
+    <div class="btns end-btns">
+      <button value="no">Cancel</button>
+      <button value="yes" id="cfYes" class="danger"></button>
+    </div>
+  </form>
+</dialog>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
